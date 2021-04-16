@@ -1,0 +1,8 @@
+untar
+run deletehalf to save on hdd space
+run splitdirs for easy multithreading
+run converPngs.py to convert jpgs to pngs
+run addSteg to add steg to pngs
+run combinedirs to create proper structure for keras
+run extractLSB
+train model :D

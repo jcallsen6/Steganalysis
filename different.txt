@@ -1,0 +1,7 @@
+What I've done different than the plan:
+split up images into subdirectories to thread easily
+needed to use PIL to convert to png, drop greyscale
+needed to use essential generators to make random english sentences for secret messages
+Turned into subdirs named w/ class labels for keras' imagedatagenerator
+https://core.ac.uk/download/pdf/268884927.pdf
+needed to only use ascii, non ascii made things very broken
