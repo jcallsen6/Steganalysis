@@ -70,10 +70,11 @@ def add_steg(path, bpp):
     
     if(args.generators):
         lsb_generators = [getattr(generators, entry) for entry in args.generators]
+    
+    count = 0
 
-    for filepath in tqdm(walk_dir(path), total=filecounter, unit='files'):
+    for filepath in tqdm(walk_dir(path), total=filecounter, unit='files'):    
         try:
-            lsb_gen
             # TODO use python-magic, if quicker
             im = Image.open(filepath)
             im_size = im.size[0] * im.size[1]
@@ -83,14 +84,22 @@ def add_steg(path, bpp):
             # remove non-ascii characters as they mess up steganography
             message = message.encode('ascii', 'ignore').decode()
             
-            # TODO evenly split generators
             if(args.generators):
-                # TODO get gen
-                secret = lsbset.hide(filepath, message, lsb_gen)
-                secret.save(filepath.replace('.png', f".{lsb_gen}.png"))
+                # TODO fix these if statements
+                # + 1 to add normal lsb
+                gen_index = int(count % (len(lsb_generators) + 1))
+                print(count)            
+                if(gen_index == len(lsb_generators)):
+                    secret = lsb.hide(filepath, message)
+                    secret.save(filepath.replace('.png', '.steg.png'))
+                else:
+                    lsb_gen = lsb_generators[gen_index]
+                    secret = lsbset.hide(filepath, message, lsb_gen())
+                    secret.save(filepath.replace('.png', f".{args.generators[gen_index]}.png"))
             else:
                 secret = lsb.hide(filepath, message)
                 secret.save(filepath.replace('.png', '.steg.png'))
+            count += 1
         except Exception as e:
             print(e)
             print(filepath)
