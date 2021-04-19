@@ -149,6 +149,8 @@ def eval_model(model, test_gen):
     plt.figure('ROC')
     plt.plot(fpr, tpr, label='AUC = %0.2f' % auc)
     plt.plot([0, 1], label='Random Guessing')
+    plt.xlabel('FPR')
+    plt.ylabel('TPR')
 
     plt.legend()
     plt.show()
