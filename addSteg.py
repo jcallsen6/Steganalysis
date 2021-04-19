@@ -31,7 +31,8 @@ def get_args():
         '-threads', help='Number of threads to use for parallel processing', type=int)
     parser.add_argument('-bpp', default=1.0,
                         help='Bits of hidden data per pixel', type=float)
-    parser.add_argument('-generators', nargs='+', help='Names of generators to use')
+    parser.add_argument('-generators', nargs='+',
+                        help='Names of generators to use')
 
     return(parser.parse_args())
 
@@ -67,13 +68,14 @@ def add_steg(path, bpp):
     filecounter = len([path for path in walk_dir(path)])
 
     gen = DocumentGenerator()
-    
+
     if(args.generators):
-        lsb_generators = [getattr(generators, entry) for entry in args.generators]
-    
+        lsb_generators = [getattr(generators, entry)
+                          for entry in args.generators]
+
     count = 0
 
-    for filepath in tqdm(walk_dir(path), total=filecounter, unit='files'):    
+    for filepath in tqdm(walk_dir(path), total=filecounter, unit='files'):
         try:
             # TODO use python-magic, if quicker
             im = Image.open(filepath)
@@ -83,19 +85,20 @@ def add_steg(path, bpp):
                                  for i in range(int(im_size * bpp / 480))])
             # remove non-ascii characters as they mess up steganography
             message = message.encode('ascii', 'ignore').decode()
-            
+
             if(args.generators):
                 # TODO fix these if statements
                 # + 1 to add normal lsb
                 gen_index = int(count % (len(lsb_generators) + 1))
-                print(count)            
+
                 if(gen_index == len(lsb_generators)):
                     secret = lsb.hide(filepath, message)
                     secret.save(filepath.replace('.png', '.steg.png'))
                 else:
                     lsb_gen = lsb_generators[gen_index]
                     secret = lsbset.hide(filepath, message, lsb_gen())
-                    secret.save(filepath.replace('.png', f".{args.generators[gen_index]}.png"))
+                    secret.save(filepath.replace(
+                        '.png', f".{args.generators[gen_index]}.png"))
             else:
                 secret = lsb.hide(filepath, message)
                 secret.save(filepath.replace('.png', '.steg.png'))

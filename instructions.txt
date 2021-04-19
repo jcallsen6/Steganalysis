@@ -3,7 +3,7 @@ run deletehalf to save on hdd space
 run splitdirs for easy multithreading
 run convertPngs.py to convert jpgs to pngs
 run addSteg to add steg to pngs
+run extractLSB
 run combinedirs to create first step of proper structure for keras
 run split_ml_dirs to create finished structure for keras datagenerators
-run extractLSB
 train model :D

@@ -139,7 +139,6 @@ def eval_model(model, test_gen):
     '''
     print('Evaluating model')
     loss = model.evaluate(test_gen, verbose=1)
-    print(f"Test loss: {loss[0]}\nTest Accuracy: {loss[1]}")
 
     print('Generating predictions for test data')
     predictions = model.predict(test_gen, verbose=1)

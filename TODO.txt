@@ -1,1 +1,2 @@
-stegano generators
+delete bash script doesn't really work?
+README

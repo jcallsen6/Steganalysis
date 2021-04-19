@@ -7,7 +7,7 @@ for i in {1..5};
 do
     for f in "$1dir_$i/"*; 
     do 
-        if [ "${f: -9}" == ".*.png" ]
+        if [ "${f: -9}" == "*.*.png" ]
         then
             mv "$f" "$11";
         elif [ "${f: -4}" == ".png" ]
@@ -18,4 +18,4 @@ do
     done
 done
 
-rm -r "$1dir_*";
+find $1 -maxdepth 1 -wholename "$1dir_*" -delete;
