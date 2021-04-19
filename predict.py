@@ -60,7 +60,7 @@ if __name__ == '__main__':
     predictions = model.predict(datagen, verbose=1)
     thresh_predictions = predictions >= float(params['threshold'])
 
-    for thresh_prediction, prediction, filename in zip(thresh_predictions, predictions, datagen.filenames):
+    for thresh_prediction, prediction, filename in zip(thresh_predictions, predictions, args.image):
         print(f"{filename}: {prediction[0]}, {thresh_prediction[0]}")
 
     tmp_dir.cleanup()
