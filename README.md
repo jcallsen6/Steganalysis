@@ -9,10 +9,10 @@ Predict on an image: python3 predict.py -image image.png -model_name models/Test
   
 __Results__  
 For pure stegano-lsb:  
-![Training Accuracy](images/basicLSB_Training_Accuracy.png)
-![ROC Curve](images/basicLSB_ROC.png)
+![Training Accuracy](images/basicLSB_Training_Accuracy.png)  
+![ROC Curve](images/basicLSB_ROC.png)  
 
 For stegano-lsbset with the identity and composite generators:  
-![Training Accuracy](images/generators_Training_Accuracy.png)
-![ROC Curve](images/generators_ROC.png)
-![Generator Comparison](Model_Performance_vs_LSB_Type.png)  
+![Training Accuracy](images/generator_Training_Accuracy.png)  
+![ROC Curve](images/generator_ROC.png)  
+![Generator Comparison](images/Model_Performance_vs_LSB_Type.png)  
