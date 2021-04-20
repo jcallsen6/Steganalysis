@@ -1,3 +1,6 @@
+'''
+Train Keras neural network to detect LSB steganography
+'''
 import argparse
 import os
 import pickle
@@ -13,9 +16,8 @@ import matplotlib.pyplot as plt
 from sklearn import metrics
 import numpy as np
 
-# TODO cite bill predictor
 
-
+# source: https://github.com/jcallsen6/billPredictor/blob/master/learnChamber.py
 def get_args():
     '''
     Gets args for this program
@@ -84,6 +86,7 @@ def create_gens(path, batch_size, img_size):
     return(train_gen, val_gen, test_gen)
 
 
+# model basd off: https://core.ac.uk/download/pdf/268884927.pdf
 def build_model(input_shape, learning_rate):
     '''
     Build neural network
@@ -119,6 +122,7 @@ def build_model(input_shape, learning_rate):
     return model
 
 
+# source: https://github.com/jcallsen6/billPredictor/blob/master/learnChamber.py
 def eval_model(model, test_gen):
     '''
     Evaluate model on given generator
@@ -148,7 +152,6 @@ def eval_model(model, test_gen):
     plt.legend()
     plt.show()
 
-    # Cite billPredictor
     with np.errstate(divide='ignore', invalid='ignore'):
         performance = np.true_divide(tpr, fpr)
         performance[np.isinf(performance)] = 0
@@ -157,6 +160,7 @@ def eval_model(model, test_gen):
     return max_threshold
 
 
+# source: https://github.com/jcallsen6/billPredictor/blob/master/learnChamber.py
 def plot_history(history):
     '''
     Plots model's training accuracy
@@ -188,13 +192,16 @@ if __name__ == '__main__':
     input_shape = train_gen.target_size
     input_shape = (input_shape[0], input_shape[1], 3)
 
+    # source: https://github.com/jcallsen6/billPredictor/blob/master/learnChamber.py
     if(args.new_model):
         model = build_model(input_shape, args.learning_rate)
     else:
         model = load_model(args.name + '/model.h5')
 
     print(model.summary())
-
+    
+    
+    # source: https://github.com/jcallsen6/billPredictor/blob/master/learnChamber.py
     model_callbacks = [callbacks.ModelCheckpoint(filepath=args.name + '/model.h5'), callbacks.ReduceLROnPlateau(
         monitor='val_loss', factor=0.2, patience=3, min_lr=args.learning_rate/1000), callbacks.EarlyStopping(patience=7)]
 
@@ -204,13 +211,15 @@ if __name__ == '__main__':
         validation_data=val_gen,
         verbose=1,
         callbacks=model_callbacks)
-
+    
+    # source: https://github.com/jcallsen6/billPredictor/blob/master/learnChamber.py
     if(args.epochs > 1):
         plot_history(history.history)
 
     thresh = eval_model(model, test_gen)
     print(f"Ideal thresh: {thresh}")
-
+    
+    # source: https://github.com/jcallsen6/billPredictor/blob/master/learnChamber.py
     with open(args.name + '/params', 'wb') as thresh_file:
         pickle.dump(
             {'threshold': thresh, 'img_size': args.img_size}, thresh_file)

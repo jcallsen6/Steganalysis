@@ -1,3 +1,6 @@
+'''
+Predict on a given image with a given model
+'''
 import argparse
 import pickle
 from keras.models import load_model

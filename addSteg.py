@@ -37,7 +37,7 @@ def get_args():
     return(parser.parse_args())
 
 
-# source: https://github.com/jcallsen6/billPredictor/blob/master/processJSON.py
+# source: https://stackoverflow.com/a/37233621
 def walk_dir(input_path):
     '''
     Walks through subdirectories to grab all necessary data

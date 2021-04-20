@@ -1,3 +1,6 @@
+'''
+Eval model performance against different generator types
+'''
 import argparse
 import os
 import pickle
@@ -8,8 +11,6 @@ from keras.losses import BinaryCrossentropy
 from keras.metrics import BinaryAccuracy
 
 import matplotlib.pyplot as plt
-
-# TODO cite bill predictor
 
 
 def get_args():
