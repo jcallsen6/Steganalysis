@@ -45,7 +45,6 @@ def get_args():
     return(parser.parse_args())
 
 
-# TODO remove flip falses
 def create_gens(path, batch_size, img_size):
     '''
     Create ImageDataGenerators for train, validate, and test from a given path
@@ -57,9 +56,7 @@ def create_gens(path, batch_size, img_size):
     return:
     tain_gen, val_gen, test_gen - keras ImageDataGenerators
     '''
-    train_datagen = ImageDataGenerator(
-        horizontal_flip=False,
-        vertical_flip=False)
+    train_datagen = ImageDataGenerator()
 
     train_gen = train_datagen.flow_from_directory(
         os.path.join(path, 'train/'),
@@ -67,9 +64,7 @@ def create_gens(path, batch_size, img_size):
         batch_size=batch_size,
         class_mode='binary')
 
-    val_datagen = ImageDataGenerator(
-        horizontal_flip=False,
-        vertical_flip=False)
+    val_datagen = ImageDataGenerator()
 
     val_gen = val_datagen.flow_from_directory(
         os.path.join(path, 'val/'),
@@ -77,9 +72,7 @@ def create_gens(path, batch_size, img_size):
         batch_size=batch_size,
         class_mode='binary')
 
-    test_datagen = ImageDataGenerator(
-        horizontal_flip=False,
-        vertical_flip=False)
+    test_datagen = ImageDataGenerator()
 
     test_gen = test_datagen.flow_from_directory(
         os.path.join(path, 'test/'),

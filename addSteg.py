@@ -77,7 +77,6 @@ def add_steg(path, bpp):
 
     for filepath in tqdm(walk_dir(path), total=filecounter, unit='files'):
         try:
-            # TODO use python-magic, if quicker
             im = Image.open(filepath)
             im_size = im.size[0] * im.size[1]
             # average sentence length is 60 bytes -> 480 bits
@@ -87,7 +86,6 @@ def add_steg(path, bpp):
             message = message.encode('ascii', 'ignore').decode()
 
             if(args.generators):
-                # TODO fix these if statements
                 # + 1 to add normal lsb
                 gen_index = int(count % (len(lsb_generators) + 1))
 

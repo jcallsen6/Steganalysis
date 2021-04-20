@@ -50,7 +50,7 @@ def create_gens(path, img_size):
             subdirs.append(subdir)
 
     gens = []
-    
+
     for subdir in subdirs:
         datagen = ImageDataGenerator()
         gens.append(datagen.flow_from_directory(
@@ -59,7 +59,7 @@ def create_gens(path, img_size):
             batch_size=1,
             class_mode='binary',
             shuffle=False))
-    
+
     return gens
 
 
@@ -77,7 +77,7 @@ def eval_model(model, gens):
     loss_list = []
     auc_list = []
     gen_names = []
-    
+
     acc = BinaryAccuracy()
     bce = BinaryCrossentropy()
 
@@ -87,22 +87,22 @@ def eval_model(model, gens):
         try:
             second_index = filename.index('.', first_index + 1)
             gen_name = filename[first_index + 1: second_index]
-            
+
             if(gen_name == 'steg'):
                 gen_name = 'Basic LSB'
         except Exception as e:
             gen_name = 'None'
 
         gen_names.append(gen_name)
-        
+
         print(f"Evaluating: {gen_name}")
 
         predictions = model.predict(gen, verbose=1)
         acc.update_state(gen.labels, predictions)
-        loss_list.append((bce(gen.labels, predictions).numpy(), acc.result().numpy())) 
+        loss_list.append(
+            (bce(gen.labels, predictions).numpy(), acc.result().numpy()))
         acc.reset_states()
 
-   
     plt.figure('Model Performance vs LSB Type')
 
     plt.subplot(1, 2, 1)
